@@ -1,21 +1,15 @@
+const path = require('path');
+
 const express = require('express');
+
+const productsController = require('../controllers/products');
+
 const router = express.Router();
-const path = require('path')
-const products = [];
-// /admin/add-product => GET 
-router.get('/add-product' , (req ,res , next ) => {
-    console.log('add-product middleware'); 
-    res.render('add-product',{pageTitle: 'Add Product'}) // template engine
-    //  res.sendFile(path.join(__dirname, '../', 'views' ,'add-product.html'))
-    //  first  res.send('<form action="/admin/add-product" method="POST"><input type="text" name="title"> <button type="submit">Add Product</button></form>');
-    // ..
-});
+
+// /admin/add-product => GET
+router.get('/add-product', productsController.getAddProduct);
 
 // /admin/add-product => POST
-router.post('/add-product' , (req ,res , next ) => {
-        products.push({title:req.body.title});
-        res.redirect('/')
-    })
+router.post('/add-product', productsController.postAddProduct);
 
-exports.routes = router;
-exports.products = products;
+module.exports = router;
